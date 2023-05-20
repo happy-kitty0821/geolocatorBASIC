@@ -53,7 +53,7 @@ This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md)
 
 ## Author
 
-- [happy-kitty0921](https://github.com/happy-kitty0921)
+- [happy-kitty0821](https://github.com/happy-kitty0821)
 
 ## Disclaimer
 
