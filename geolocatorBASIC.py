@@ -12,12 +12,11 @@ from tabulate import tabulate
 from geopy.geocoders import Nominatim
 from datetime import datetime
 
-#you need to be a root or a admin to run this script
-
-if not 'SUDO_UID' in os.environ.keys():
-    print("You need to be a superuser to run this script")
+# Check if the script is run as a superuser
+if os.geteuid() != 0:
+    print("You need to be a superuser to run this script.")
     exit()
-
+    
 
 print(r"""
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⢬⣧⠀⠙⣆⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -48,14 +47,14 @@ print(r"""
 
 """)
 
+
 print("\n************************************************************************************************************")
 print("\n* Copyright of Happy-kitty                                                                                 *")
-print("\n* for educational purposes only                                                                            *")
+print("\n* For educational purposes only                                                                            *")
 print("\n* I will not be held responsible if you are caught using this script for malicious intents                 *")
-print("\n* Do not track the location of others without their consents                                               *")
+print("\n* Do not track the location of others without their consent                                               *")
 print("\n* github.com/happy-kitty0921                                                                               *")
 print("\n************************************************************************************************************")
-
 
 geolocator = Nominatim(user_agent="happy-kitty0821")
 
@@ -77,16 +76,13 @@ try:
                 ["Raw Location:", location.raw]
             ]
             print("")
-            print("would you like to see the result in the terminal???")
-            print("y/n")
+            print("Would you like to see the result in the terminal? (y/n)")
             print("")
             OUTPUT = input(">>>")
-            if OUTPUT == "y":
+            if OUTPUT.lower() == "y":
                 print(tabulate(table))
-            elif OUTPUT == "n":
-
+            elif OUTPUT.lower() == "n":
                 # Save the report in a text file with the date and time
-
                 now = datetime.now()
                 timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
                 filename = f"geolocation_report_{timestamp}.txt"
@@ -94,11 +90,10 @@ try:
                 with open(filename, "w") as file:
                     for row in table:
                         file.write(row[0] + " " + str(row[1]) + "\n")
-            
-            else:
-                print("please enter a valid command")
 
-            print(f"Geolocation report saved in file: {filename}")
+                print(f"Geolocation report saved in file: {filename}")
+            else:
+                print("Please enter a valid command (y/n).")
         else:
             print("Could not retrieve geolocation information.")
 except ValueError:
